@@ -112,6 +112,11 @@ app.include_router(ChatMultiple4Router)
 from api_chatSingle3 import router as ChatSingle3Router
 app.include_router(ChatSingle3Router)
 
+# 接口：/chatLegal/ 和 /getSample/  -- 请求方式PUT
+# 【系统】法律咨询聊天接口和示例获取接口
+from api_chatLaw import router as ChatLawRouter
+app.include_router(ChatLawRouter)
+
 # -----------------------------------------------------------
 
 @app.get("/")
