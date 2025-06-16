@@ -95,6 +95,14 @@ app.include_router(GetFunctionsRouter)
 app.include_router(CheckUserRouter)
 
 # -----------------------------------------------------------
+# 【 -- AI聊天模块 -- 】
+# -----------------------------------------------------------
+# 接口：/chatMultiple3/  -- 请求方式PUT
+# 【系统】多轮对话聊天接口
+from api_chatMultiple3 import router as ChatMultiple3Router
+app.include_router(ChatMultiple3Router)
+
+# -----------------------------------------------------------
 
 @app.get("/")
 async def read_root():
