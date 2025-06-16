@@ -1,0 +1,26 @@
+# FastAPI 后台服务配置段落
+[fastapi]
+title=百变助理小程序后台
+description=基于国内AI免费版，有问题请联系：Lord
+version=2.0.0
+# fastAPI 接口文档路径（以下两个都是），建议更改成不常用的名字（下面是标准配置，未更改）
+# 通过http://0.0.0.0:8000/docs，访问
+docs_url=/docs
+redoc_url=/redocs
+debug=False
+# 重要配置，一定要改成600，不然OpenAI后台稍慢，系统就会返回超时
+timeout=600
+
+
+# 微信小程序配置段落
+[wechat]
+appid = 这里替换成你自己的appid
+secret = 这里替换成你自己的secret
+
+# AI大模型配置段落
+[zhipu]
+zhipu_api_key = 这里替换成你自己的api key
+model = glm-4-flash
+temperature = 1.0
+# 模型输出的最大token数，最大输出为4095，默认值为1024
+max_completion_tokens = 10
