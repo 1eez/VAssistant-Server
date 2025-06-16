@@ -89,8 +89,10 @@ app.include_router(WxAuthRouter)
 # 【系统】添加用户信息
 from api_addUser import router as AddUserRouter
 from api_getFunctions import router as GetFunctionsRouter
+from api_checkUser import router as CheckUserRouter
 app.include_router(AddUserRouter)
 app.include_router(GetFunctionsRouter)
+app.include_router(CheckUserRouter)
 
 # -----------------------------------------------------------
 
