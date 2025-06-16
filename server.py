@@ -102,6 +102,11 @@ app.include_router(CheckUserRouter)
 from api_chatMultiple3 import router as ChatMultiple3Router
 app.include_router(ChatMultiple3Router)
 
+# 接口：/chatSingle3/  -- 请求方式PUT
+# 【系统】单轮对话聊天接口
+from api_chatSingle3 import router as ChatSingle3Router
+app.include_router(ChatSingle3Router)
+
 # -----------------------------------------------------------
 
 @app.get("/")

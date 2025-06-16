@@ -16,6 +16,37 @@ from common_ai_chat import chat_with_ai
 from configparser import ConfigParser
 import logging
 
+# 系统提示和参数配置常量
+FUNCTION_CONFIGS = {
+    'chat3': {
+        'system_prompt': "你是我的助理。",
+        'temperature': 0.9
+    },
+    'kuakua': {
+        'system_prompt': "你是我的私人助理，你最重要的工作就是不断地鼓励我、激励我、夸赞我。你需要以温柔、体贴、亲切的语气和我聊天。你的聊天风格特别可爱有趣，你的每一个回答都要体现这一点。",
+        'temperature': 1.0
+    },
+    'queries': {
+        'system_prompt': "你是一个知识丰富的万事通。如果你明确知道答案的话请回答；如果不知道答案，就说不知道，不可以随意回复不确定的信息。",
+        'temperature': 0.2
+    },
+    'MJPrompt': {
+        'system_prompt': "从现在开始，你是一名中英翻译，你会根据我输入的中文内容，翻译成对应英文。请注意，你翻译后的内容主要服务于一个绘画AI，它只能理解具象的描述而非抽象的概念，同时根据你对绘画AI的理解，比如它可能的训练模型、自然语言处理方式等方面，进行翻译优化。由于我的描述可能会很散乱，不连贯，你需要综合考虑这些问题，然后对翻译后的英文内容再次优化或重组，从而使绘画AI更能清楚我在说什么。请严格按照此条规则进行翻译，也只输出翻译后的英文内容。例如，我输入：一只想家的小狗。你不能输出：/imagine prompt: A homesick little dog. 你必须输出：/imagine prompt: A small dog that misses home, with a sad look on its face and its tail tucked between its legs. It might be standing in front of a closed door or a gate, gazing longingly into the distance, as if hoping to catch a glimpse of its beloved home. 如果你明白了，请回复我准备好了，当我输入中文内容后，请以/imagine prompt:作为开头，翻译我需要的英文内容。",
+        'temperature': 0.2
+    },
+    'poet': {
+        'system_prompt': "你是一个浪漫的诗人。每一句话的最后一个字的韵母必须完全相同，你回答的每一句话都要体现这一点。",
+        'temperature': 1.0
+    },
+    'lonely': {
+        'system_prompt': "你是一个喜欢聊天的女性。为了聊天不间断，你的每一个回答都要包含问句，请务必体现这一点。如果不知道该说什么，就说：然后呢？",
+        'temperature': 1.0
+    }
+}
+
+# 默认配置
+DEFAULT_SYSTEM_PROMPT = "你是一个有用的AI助手，请用中文回答用户的问题。"
+
 # 读取配置文件
 config = ConfigParser()
 config.read(r'config.ini', encoding='utf-8')
@@ -134,7 +165,9 @@ async def chat_multiple3(request: ChatMultiple3Request):
         
         # 添加系统提示（如果是新会话）
         if len(messages) == 0:
-            system_prompt = "你是一个有用的AI助手，请用中文回答用户的问题。"
+            # 根据function参数获取对应的系统提示
+            config_info = FUNCTION_CONFIGS.get(request.function, {})
+            system_prompt = config_info.get('system_prompt', DEFAULT_SYSTEM_PROMPT)
             messages.append({
                 "role": "system",
                 "content": system_prompt
@@ -150,7 +183,9 @@ async def chat_multiple3(request: ChatMultiple3Request):
         try:
             # 从配置文件读取AI参数
             model = config.get('zhipu', 'model', fallback='glm-4-flash')
-            temperature = config.getfloat('zhipu', 'temperature', fallback=1.0)
+            # 根据function参数获取对应的温度设置
+            config_info = FUNCTION_CONFIGS.get(request.function, {})
+            temperature = config_info.get('temperature', config.getfloat('zhipu', 'temperature', fallback=1.0))
             max_tokens = config.getint('zhipu', 'max_completion_tokens', fallback=1000)
             
             ai_response = chat_with_ai(
