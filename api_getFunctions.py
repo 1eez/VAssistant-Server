@@ -52,8 +52,8 @@ def getFunctions():
         },
         {
           'icon': '/images/navigator/icon-zuoti.png',
-          'title': 'Midjourney提示词',
-          'navigateMark': 'MJPrompt'
+          'title': '少女Ani',
+          'navigateMark': 'lonely'
         },
         {
           'icon': '/images/navigator/icon-dianping.png',
