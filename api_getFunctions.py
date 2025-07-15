@@ -53,7 +53,7 @@ def getFunctions():
         {
           'icon': '/images/navigator/icon-zuoti.png',
           'title': '少女Ani',
-          'navigateMark': 'lonely'
+          'navigateMark': 'MJPrompt'
         },
         {
           'icon': '/images/navigator/icon-dianping.png',
